@@ -1,0 +1,39 @@
+service: parquet-service
+
+plugins:
+  - serverless-prune-plugin
+  - serverless-latest-layer-version
+
+custom:
+  prune:
+    includeLayers: true
+    automatic: true
+    number: 2
+  region: eu-central-1
+  awsAccountId: 069829654358
+  apiGatewayName: credit-recommendation-api-gateway
+  deploymentBucketName: credit-recommendation-deployment-bucket-${self:provider.stage}
+
+provider:
+  name: aws
+  memorySize: 1024
+  runtime: python3.9
+  stage: ${opt:stage}
+  region: ${self:custom.region}
+  stackName: sls-${self:service}-${opt:stage, self:provider.stage}-stack
+  deploymentBucket:
+    name: ${self:custom.deploymentBucketName}
+    maxPreviousDeploymentArtifacts: 10
+  apiGateway:
+    restApiId:
+      !ImportValue ${self:custom.apiGatewayName}-${opt:stage}-api-id
+    restApiRootResourceId:
+      !ImportValue ${self:custom.apiGatewayName}-${opt:stage}-api-root-resource-id
+  role: !GetAtt IamRoleLambdaExecution.Arn
+
+functions:
+  ${file(./sls-configs/functions/functions.yml)}
+
+resources:
+  - ${file(./sls-configs/resources/log-group-and-subscription.yml)}
+  - ${file(./sls-configs/resources/role.yml)}

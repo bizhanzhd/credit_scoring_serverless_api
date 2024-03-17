@@ -1,0 +1,30 @@
+ParquetService:
+  name: ${self:provider.stage}-${self:service}
+  handler: sls-handlers/${self:provider.name}/parquet_service_handler.handle
+  disableLogs: true
+  timeout: 90
+  layers:
+    - !ImportValue sls-credit-recommendation-layers-${opt:stage}-PythonHandlerLambdaLayerQualifiedArn
+  package:
+    include:
+      - sls-handlers/${self:provider.name}/parquet_service_handler.py
+  events:
+    - http:
+        path: parquet
+        method: post
+        private: true
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+            - X-Amzn-Trace-Id
+        authorizer:
+          type: COGNITO_USER_POOLS # important
+          authorizerId: !ImportValue ${self:custom.apiGatewayName}-cognito-authorizer-${opt:stage}
+          scopes:
+            - parquet/write

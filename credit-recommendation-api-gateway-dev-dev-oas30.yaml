@@ -1,0 +1,45 @@
+openapi: "3.0.1"
+info:
+  title: "credit-recommendation-api-gateway-dev"
+  description: "Api gateway for Credit Recommendation services created from serverless for dev environment"
+  version: "2022-11-30T11:58:34Z"
+servers:
+  - url: "https://dev.api.virtualb.cloud"
+    x-amazon-apigateway-endpoint-configuration:
+      disableExecuteApiEndpoint: true
+paths:
+  /parquet:
+    post:
+      responses:
+        200:
+          description: "200 response"
+      security:
+        - credit-recommendation-service-authorizer-dev:
+            - "parquet/write"
+        - api_key: [ ]
+    options:
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content: { }
+components:
+  securitySchemes:
+    api_key:
+      type: "apiKey"
+      name: "x-api-key"
+      in: "header"
+    credit-recommendation-service-authorizer-dev:
+      type: "apiKey"
+      name: "Authorization"
+      in: "header"
+      x-amazon-apigateway-authtype: "cognito_user_pools"

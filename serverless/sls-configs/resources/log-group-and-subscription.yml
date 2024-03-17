@@ -1,0 +1,6 @@
+Resources:
+  ParquetServiceLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/${opt:stage, self:provider.stage}-${self:service}
+      RetentionInDays: 365
