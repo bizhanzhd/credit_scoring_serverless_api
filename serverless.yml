@@ -1,0 +1,34 @@
+service: credit-recommendation-layers
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.9
+  lambdaHashingVersion: 20201221
+  region: ${self:custom.defaultRegion}
+  deploymentBucket:
+    name: ${self:custom.deploymentBucketName}
+    serverSideEncryption: AES256
+    maxPreviousDeploymentArtifacts: 10
+
+package:
+  patterns:
+    - '!node_modules/**'
+    - '!.serverless/**'
+
+custom:
+  defaultRegion: eu-central-1
+  awsAccountId: 069829654358
+  prune:
+    includeLayers: true
+    automatic: true
+    number: 2
+  deploymentBucketName: credit-recommendation-deployment-bucket-${opt:stage}
+
+layers:
+  PythonHandler:
+    package:
+      artifact: layer.zip
+    description: "aws wrangler layer"
+    name: wrangler-layer-${opt:stage}
+    retain: true
