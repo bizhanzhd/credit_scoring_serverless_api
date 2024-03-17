@@ -1,0 +1,13 @@
+ParquetMergerService:
+  name: ${self:provider.stage}-${self:service}
+  handler: sls-handlers/${self:provider.name}/parquet_merger_service_handler.handle
+  disableLogs: true
+  timeout: 900
+  layers:
+    - !ImportValue sls-credit-recommendation-layers-${opt:stage}-PythonHandlerLambdaLayerQualifiedArn
+  package:
+    include:
+      - sls-handlers/${self:provider.name}/parquet_merger_service_handler.py
+  events:
+    - schedule: cron(0 2 ? * * *)
+
