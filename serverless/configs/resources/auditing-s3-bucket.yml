@@ -1,0 +1,13 @@
+Resources:
+  CreditRecommendationAuditingBucket:
+    Type: 'AWS::S3::Bucket'
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: ${self:custom.auditingBucket}
+
+Outputs:
+  CreditRecommendationAuditingBucket:
+    Description: auditing bucket for credit recommendation
+    Value: !Ref CreditRecommendationAuditingBucket
+    Export:
+      Name: ${self:custom.auditingBucket}-bucket

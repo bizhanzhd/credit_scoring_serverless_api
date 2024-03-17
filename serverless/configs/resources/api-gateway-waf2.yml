@@ -1,0 +1,117 @@
+Resources:
+  CreditRecommendationWebAcl:
+    Type: 'AWS::WAFv2::WebACL'
+    DependsOn:
+      - WAFWhitelistSetV4
+    Properties:
+      Description: Web ACL for CreditRecommendation API Gateway
+      Name: CreditRecommendation-${opt:stage}
+      DefaultAction:
+        Allow: { }
+      Rules:
+        - Name: AWS-CommonRuleSet
+          Priority: 0
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesCommonRuleSet
+              ExcludedRules: [ ]
+          OverrideAction:
+            None: { }
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: credit-recommendation-aws-common_rule_set-metric-${opt:stage}
+        - Name: WhitelistRule
+          Priority: 1
+          Action:
+            Allow: { }
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: credit-recommendation-white-listed-ip-rule_set-metric-${opt:stage}
+          Statement:
+            IPSetReferenceStatement:
+              Arn: !GetAtt WAFWhitelistSetV4.Arn
+        - Name: Bad-Inputs
+          Priority: 2
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesKnownBadInputsRuleSet
+              ExcludedRules: [ ]
+          OverrideAction:
+            None: { }
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: credit-recommendation-aws-bad-inputs-metric-${opt:stage}
+        - Name: Anonymous-IpList
+          Priority: 3
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesAnonymousIpList
+              ExcludedRules: [ ]
+          OverrideAction:
+            None: { }
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: credit-recommendation-aws-anonymous-iplist-metric-${opt:stage}
+        - Name: SQLInject-RuleSet
+          Priority: 4
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesSQLiRuleSet
+          OverrideAction:
+            None: { }
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: credit-recommendation-aws-SQLInjection-ruleset-metric-${opt:stage}
+      Scope: REGIONAL
+      Tags:
+        - Key: Name
+          Value: CreditRecommendation-${opt:stage}
+      VisibilityConfig:
+        SampledRequestsEnabled: true
+        CloudWatchMetricsEnabled: true
+        MetricName: credit-recommendation-web-owasp-metric-${opt:stage}
+
+  CreditRecommendationCloudwatchLogsGroup:
+    Type: 'AWS::Logs::LogGroup'
+    Properties:
+      LogGroupName: aws-waf-logs-web-owasp-${opt:stage}
+      RetentionInDays: 180
+
+  CreditRecommendationWebACLLogging:
+    Type: 'AWS::WAFv2::LoggingConfiguration'
+    DependsOn:
+      - CreditRecommendationWebAcl
+      - CreditRecommendationCloudwatchLogsGroup
+    Properties:
+      ResourceArn: !GetAtt
+        - CreditRecommendationWebAcl
+        - Arn
+      LogDestinationConfigs:
+        - !GetAtt CreditRecommendationCloudwatchLogsGroup.Arn
+      LoggingFilter:
+        DefaultBehavior: KEEP
+        Filters:
+          - Behavior: KEEP
+            Conditions:
+              - ActionCondition:
+                  Action: BLOCK
+            Requirement: MEETS_ANY
+      RedactedFields:
+        - SingleHeader:
+            Name: password
+
+Outputs:
+  CreditRecommendationWebAcl:
+    Description: ARN of CreditRecommendation WebACL
+    Value: !GetAtt
+      - CreditRecommendationWebAcl
+      - Arn

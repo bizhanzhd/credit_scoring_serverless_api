@@ -1,0 +1,14 @@
+Resources:
+  # IPV4 IPSets
+  WAFWhitelistSetV4:
+    Type: 'AWS::WAFv2::IPSet'
+    Properties:
+      Scope: 'REGIONAL'
+      IPAddressVersion: 'IPV4'
+      Name: credit-recommendation-WhitelistSetIPV4-${opt:stage}
+      Description: 'Allow List for IPV4 addresses'
+      Addresses:
+        - '3.122.6.67/32'
+        - '18.194.103.225'
+        - '18.195.92.203'
+        - '18.156.190.163'

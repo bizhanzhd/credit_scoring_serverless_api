@@ -1,0 +1,33 @@
+Resources:
+  CreditRecommendationApiGatewayApiKey:
+    Type: AWS::ApiGateway::ApiKey
+    Properties:
+      Description: 'Credit Recommendation api gateway api key'
+      Enabled: true
+      GenerateDistinctId: true
+      Name: ${opt:stage}-credit-recommendation-internal-api-key
+
+  CreditRecommendationApiGatewayUsagePlan:
+    Type: AWS::ApiGateway::UsagePlan
+    DependsOn:
+      - ApiGatewayDeployment
+      - APIGatewayStage
+    Properties:
+      ApiStages:
+        - ApiId: !Ref CreditRecommendationApiGateway
+          Stage: !Ref APIGatewayStage
+      Description: 'credit recommendation api gateway api usage plan'
+      Quota:
+        Limit: 1000
+        Period: DAY
+      Throttle:
+        BurstLimit: 500
+        RateLimit: 1000
+      UsagePlanName: ${opt:stage}-credit-recommendation-api-usage-plan
+
+  CreditRecommendationApiGatewayUsagePlanKey:
+    Type: AWS::ApiGateway::UsagePlanKey
+    Properties:
+      KeyId: !Ref CreditRecommendationApiGatewayApiKey
+      KeyType: API_KEY
+      UsagePlanId: !Ref CreditRecommendationApiGatewayUsagePlan

@@ -1,0 +1,33 @@
+Resources:
+  ScindoApiGatewayApiKey:
+    Type: AWS::ApiGateway::ApiKey
+    Properties:
+      Description: 'Scindo api gateway api key'
+      Enabled: true
+      GenerateDistinctId: true
+      Name: ${opt:stage}-scindo-api-key
+
+  ScindoApiGatewayUsagePlan:
+    Type: AWS::ApiGateway::UsagePlan
+    DependsOn:
+      - ApiGatewayDeployment
+      - APIGatewayStage
+    Properties:
+      ApiStages:
+        - ApiId: !Ref CreditRecommendationApiGateway
+          Stage: !Ref APIGatewayStage
+      Description: 'Scindo api gateway api usage plan'
+      Quota:
+        Limit: 1000
+        Period: DAY
+      Throttle:
+        BurstLimit: 500
+        RateLimit: 1000
+      UsagePlanName: ${opt:stage}-scindo-api-usage-plan
+
+  ScindoApiGatewayUsagePlanKey:
+    Type: AWS::ApiGateway::UsagePlanKey
+    Properties:
+      KeyId: !Ref ScindoApiGatewayApiKey
+      KeyType: API_KEY
+      UsagePlanId: !Ref ScindoApiGatewayUsagePlan

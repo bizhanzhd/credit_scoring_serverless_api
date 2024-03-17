@@ -1,0 +1,64 @@
+service: credit-recommendation-shared-infra-resources
+
+frameworkVersion: 3.23.0
+
+plugins:
+  - serverless-prune-plugin
+  - serverless-deployment-bucket
+#  - serverless-domain-manager
+#  - serverless-certificate-creator
+
+custom:
+  defaultRegion: eu-central-1
+  auditingBucket: credit-recommendation-auditing-${self:provider.stage}
+  deploymentBucketName: credit-recommendation-deployment-bucket-${self:provider.stage}
+  apiGatewayName: credit-recommendation-api-gateway
+  userPoolName: credit-recommendation-user-pool-${opt:stage}
+  userPoolDomainName: creditrecommendation-${opt:stage}
+  cognitoDomainName: ${opt:stage}-auth.virtualb.cloud
+  prune:
+    automatic: true
+    number: 2
+
+#  customCertificate:
+#    hostedZoneNames: "virtualb.cloud."
+#    certificateName: ${opt:stage}.api.virtualb.cloud
+#    region: ${self:provider.region}
+#
+#    # Route53
+#  customDomain:
+#    rest:
+#      domainName: ${opt:stage}.api.virtualb.cloud
+#      certificateName: ${opt:stage}.api.virtualb.cloud
+#      createRoute53Record: true
+#      basePath: 'api'
+#      createRoute53IPv6Record: false
+#      autoDomain: true
+#      endpointType: REGIONAL
+#      securityPolicy: tls_1_2
+#      stage: ${opt:stage}
+
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage}
+  region: ${opt:region, self:custom.defaultRegion}
+  stackName: sls-${self:service}-${self:provider.stage}-stack
+  deploymentBucket:
+    name: ${self:custom.deploymentBucketName}
+
+resources:
+  - ${file(./configs/resources/api-gateway.yml)}
+  - ${file(./configs/resources/cognito-user-pool.yml)}
+  - ${file(./configs/resources/cognito-user-pool-client.yml)}
+  - ${file(./configs/resources/api-gateway-authorizer.yml)}
+  - ${file(./configs/resources/api-gateway-api-key.yml)}
+  - ${file(./configs/resources/scindo-api-gateway-api-key.yml)}
+  - ${file(./configs/resources/api-gateway-waf2.yml)}
+  - ${file(./configs/resources/api-gateway-waf-association.yml)}
+  - ${file(./configs/resources/waf-ipv4-whitelist.yml)}
+  - ${file(./configs/resources/credit-recommendation-api-key-secret-ssm.yml)}
+  - ${file(./configs/resources/credit-recommendation-user-client-secret-ssm.yml)}
+  - ${file(./configs/resources/auditing-s3-bucket.yml)}
+#  - ${file(./configs/resources/acm-certificate.yml)}

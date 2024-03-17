@@ -1,0 +1,46 @@
+Resources:
+  CreditRecommendationUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    DependsOn:
+      - CreditRecommendationResourceServer
+      - CreditRecommendationResourceServerParquet
+    Properties:
+      AccessTokenValidity: 5
+      AllowedOAuthFlows:
+        - client_credentials
+      AllowedOAuthScopes:
+        - prob/write
+        - parquet/write
+      AllowedOAuthFlowsUserPoolClient: true
+      AuthSessionValidity: 5
+      ClientName: ${self:provider.stage}-credit-recommendation-internal-app-client
+      EnablePropagateAdditionalUserContextData: true
+      EnableTokenRevocation: true
+      GenerateSecret: true
+      SupportedIdentityProviders:
+        - COGNITO
+      TokenValidityUnits:
+        AccessToken: "minutes"
+      UserPoolId: !Ref CreditRecommendationUserPool
+
+  ScindoUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    DependsOn:
+      - CreditRecommendationResourceServer
+    Properties:
+      AccessTokenValidity: 5
+      AllowedOAuthFlows:
+        - client_credentials
+      AllowedOAuthScopes:
+        - prob/write
+      AllowedOAuthFlowsUserPoolClient: true
+      AuthSessionValidity: 5
+      ClientName: ${self:provider.stage}-scindo-app-client
+      EnablePropagateAdditionalUserContextData: true
+      EnableTokenRevocation: true
+      GenerateSecret: true
+      SupportedIdentityProviders:
+        - COGNITO
+      TokenValidityUnits:
+        AccessToken: "minutes"
+      UserPoolId: !Ref CreditRecommendationUserPool

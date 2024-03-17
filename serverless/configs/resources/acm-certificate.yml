@@ -1,0 +1,13 @@
+Resources:
+  CognitoCertificate:
+    Type: "AWS::CertificateManager::Certificate"
+    Properties:
+      DomainName: ${self:custom.cognitoDomainName}
+      ValidationMethod: DNS
+
+Outputs:
+  CognitoCertificate:
+    Description: cognito custom domain certificate arn
+    Value: !Ref CognitoCertificate
+    Export:
+      Name: ${opt:stage}-cognito-custom-domain-certificate-arn

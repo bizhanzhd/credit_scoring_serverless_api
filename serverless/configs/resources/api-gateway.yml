@@ -1,0 +1,67 @@
+Resources:
+  CreditRecommendationApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+      Description: Api gateway for Credit Recommendation services created from serverless for ${opt:stage} environment
+      Name: ${self:custom.apiGatewayName}-${opt:stage}
+
+  ApiGatewayResourceHealth:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref CreditRecommendationApiGateway
+      PathPart: health
+      ParentId: !GetAtt CreditRecommendationApiGateway.RootResourceId
+
+  ApiGatewayModel:
+    Type: AWS::ApiGateway::Model
+    Properties:
+      ContentType: 'application/json'
+      RestApiId: !Ref CreditRecommendationApiGateway
+      Schema: { }
+      Name: health
+
+  ApiGatewayMethodHealth:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      HttpMethod: GET
+      ResourceId: !Ref ApiGatewayResourceHealth
+      RestApiId: !Ref CreditRecommendationApiGateway
+      ApiKeyRequired: false
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+      MethodResponses:
+        - StatusCode: 200
+
+  APIGatewayStage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      StageName: ${opt:stage}
+      Description: ${opt:stage} Stage
+      RestApiId: !Ref CreditRecommendationApiGateway
+      DeploymentId: !Ref ApiGatewayDeployment
+      Variables:
+        Stack: ${opt:stage}
+
+  ApiGatewayDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: ApiGatewayMethodHealth
+    Properties:
+      Description: Health API Deployment
+      RestApiId: !Ref CreditRecommendationApiGateway
+
+Outputs:
+  CreditRecommendationApiGatewayId:
+    Description: ${self:custom.apiGatewayName}-${opt:stage} API gateway Id
+    Value: !Ref CreditRecommendationApiGateway
+    Export:
+      Name: ${self:custom.apiGatewayName}-${opt:stage}-api-id
+
+  CreditRecommendationApiGatewayRootResourceId:
+    Description: ${self:custom.apiGatewayName}-${opt:stage} API gateway  root resource Id
+    Value: !GetAtt CreditRecommendationApiGateway.RootResourceId
+    Export:
+      Name: ${self:custom.apiGatewayName}-${opt:stage}-api-root-resource-id

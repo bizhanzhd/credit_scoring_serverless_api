@@ -1,0 +1,17 @@
+Resources:
+  CreditRecommendationApiGatewayAuthorizer:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      IdentitySource: 'method.request.header.Authorization'
+      Name: credit-recommendation-service-authorizer-${opt:stage}
+      ProviderARNs:
+        - !GetAtt CreditRecommendationUserPool.Arn
+      RestApiId: !Ref CreditRecommendationApiGateway
+      Type: COGNITO_USER_POOLS
+
+Outputs:
+  CreditRecommendationApiGatewayAuthorizer:
+    Description: ${self:custom.apiGatewayName} API gateway cognito authorizer
+    Value: !Ref CreditRecommendationApiGatewayAuthorizer
+    Export:
+      Name: ${self:custom.apiGatewayName}-cognito-authorizer-${opt:stage}

@@ -1,0 +1,41 @@
+Resources:
+  CreditRecommendationUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: ${self:custom.userPoolName}
+
+  CreditRecommendationUserPoolDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+#      CustomDomainConfig:
+#        CertificateArn: !Ref CognitoCertificate
+#      Domain: ${self:custom.cognitoDomainName}
+      Domain:  ${self:custom.userPoolDomainName}
+      UserPoolId: !Ref CreditRecommendationUserPool
+
+  CreditRecommendationResourceServer:
+    Type: AWS::Cognito::UserPoolResourceServer
+    Properties:
+      Identifier: prob
+      Name: Credit Recommendation Prob API
+      Scopes:
+        - ScopeName: "write"
+          ScopeDescription: 'write scope for credit recommendation prob'
+      UserPoolId: !Ref CreditRecommendationUserPool
+
+  CreditRecommendationResourceServerParquet:
+    Type: AWS::Cognito::UserPoolResourceServer
+    Properties:
+      Identifier: parquet
+      Name: Credit Recommendation Parquet API
+      Scopes:
+        - ScopeName: "write"
+          ScopeDescription: 'write scope for credit recommendation parquet'
+      UserPoolId: !Ref CreditRecommendationUserPool
+
+Outputs:
+  CreditRecommendationUserPool:
+    Description: ${self:custom.userPoolName} user pool
+    Value: !Ref CreditRecommendationUserPool
+    Export:
+      Name: ${self:custom.userPoolName}

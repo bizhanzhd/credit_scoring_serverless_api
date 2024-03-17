@@ -1,0 +1,19 @@
+{
+  "name": "credit-recommendation-shared-infra-resources",
+  "version": "1.0.0",
+  "description": "Project for creating Credit Recommendation shared resources",
+  "main": "index.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "serverless-deployment-bucket": "1.5.1",
+    "serverless-domain-manager": "6.2.0",
+    "serverless-plugin-existing-s3": "2.4.0",
+    "serverless-prune-plugin": "1.4.4" ,
+    "serverless-certificate-creator": "1.6.0"
+  },
+  "scripts": {},
+  "contributors": [],
+  "author": "Nitesh Jha",
+  "license": ""
+}
