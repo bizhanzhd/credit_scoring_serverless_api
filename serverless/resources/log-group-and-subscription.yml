@@ -1,0 +1,6 @@
+Resources:
+  CreditRecommendationServiceLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/${opt:stage}-${self:service}
+      RetentionInDays: 365

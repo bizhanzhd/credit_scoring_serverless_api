@@ -1,0 +1,76 @@
+service: credit-recommendation-service
+
+frameworkVersion: 3.23.0
+
+plugins:
+  - serverless-prune-plugin
+  - serverless-offline
+  - serverless-python-requirements
+
+custom:
+  defaultRegion: eu-central-1
+  awsAccountId: 069829654358
+  apiGatewayName: credit-recommendation-api-gateway
+  deploymentBucketName: credit-recommendation-deployment-bucket-${self:provider.stage}
+  pythonRequirements:
+    dockerizePip: false
+  prune:
+    automatic: true
+    number: 2
+
+package:
+  individually: true
+  patterns:
+    - "!*.txt"
+    - "!*.md"
+    - "!*.json"
+    - "!node_modules/**"
+    - "!layers/**"
+    - "!resources/**"
+    - "!src/**"
+
+provider:
+  name: aws
+  memorySize: 3072
+  stage: ${opt:stage}
+  region: ${opt:region, self:custom.defaultRegion}
+  stackName: sls-${self:service}-${self:provider.stage}-stack
+  ecr:
+    scanOnPush: true
+    images:
+      credit_recommendation_image:
+        path: ./
+        platform: linux/amd64
+  apiGateway:
+    restApiId:
+      !ImportValue ${self:custom.apiGatewayName}-${opt:stage}-api-id
+    restApiRootResourceId:
+      !ImportValue ${self:custom.apiGatewayName}-${opt:stage}-api-root-resource-id
+  deploymentBucket:
+    name: ${self:custom.deploymentBucketName}
+    serverSideEncryption: AES256
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource:
+            - arn:aws:logs:*:*:*
+        - Effect: Allow
+          Action:
+            - ecr:BatchGetImage
+            - ecr:DeleteRepositoryPolicy
+            - ecr:GetDownloadUrlForLayer
+            - ecr:GetRepositoryPolicy
+            - ecr:SetRepositoryPolicy
+          Resource:
+            - arn:aws:ecr:${self:custom.defaultRegion}:${self:custom.awsAccountId}:repository/*
+
+functions:
+  ${file(./serverless/functions/functions.yml)}
+
+resources:
+  - ${file(./serverless/resources/log-group-and-subscription.yml)}

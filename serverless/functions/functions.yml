@@ -1,0 +1,26 @@
+- credit_recommendation:
+    image:
+      name: credit_recommendation_image
+    name: ${self:service}-${self:provider.stage}
+    description: post endpoint for credit recommendation prob resource
+    timeout: 60
+    events:
+      - http:
+          path: prob
+          method: post
+          private: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Amzn-Trace-Id
+          authorizer:
+            type: COGNITO_USER_POOLS # important
+            authorizerId: !ImportValue ${self:custom.apiGatewayName}-cognito-authorizer-${opt:stage}
+            scopes:
+              - prob/write

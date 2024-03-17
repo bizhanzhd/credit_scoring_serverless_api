@@ -1,0 +1,36 @@
+id,age,education,region,profession,gender,sector,merchant_type,onboarding_device,salary_on_acc_bool,job_presence_bool,scindo_default_bool,cash_withdrawals_norm,num_transactions_norm,active_rids_norm,credit_card_usage_norm,avg_amount_transactions_norm,time_of_registration_norm,onboarding_time_norm,weekly_visits_norm,client_since_norm,completed_loans_amount_norm,completed_loans_num_norm,max_min_index,income_debt_index,wealth_debt_index,in_out_index,sign
+0,31.0,laurea,lombardia,dipendente a tempo determinato,f,design architettura e arti creative,commercialista,apple,1.0,1.0,0.0,0.2,0.6,0.17,0.5,0.7,12.0,0.5,0.5,0,0.0,0.0,0.2,0.3,1.24,0.46,0
+1,35.0,laurea,calabria,consulente con partita IVA,m,altro,oculista,samsung,0.0,1.0,0.0,0.7,0.3,0.03,0.5,0.3,12.0,0.7,0.5,0,0.0,0.0,0.1,0.4,0.01,0.35,1
+2,45.0,laurea,campania,imprenditore,m,costruzioni,notaio,samsung,0.0,1.0,0.0,0.0,0.05,0.0,0.0,0.05,12.0,0.1,0.9,0,0.0,0.0,0.05,0.1,0.49,0.1,1
+3,53.0,laurea,molise,dipendente a tempo indeterminato,m,istruzione e formazione,commercialista,samsung,1.0,1.0,0.0,0.5,0.6,0.1,0.5,0.5,12.0,0.3,0.6,0,0.0,0.0,0.1,0.29,1.45,0.43,0
+4,39.0,laurea,veneto,imprenditore,m,commercio al dettaglio,avvocato,apple,1.0,1.0,0.0,0.8,0.7,0.3,0.6,0.8,12.0,0.6,0.3,0,0.0,0.0,0.3,0.17,0.16,0.25,1
+5,60.0,laurea,liguria,non occupato,f,altro,oculista,apple,1.0,0.0,0.0,0.6,0.2,0.03,0.3,0.3,12.0,0.8,0.6,0,0.0,0.0,0.1,0.2,0.04,0.18,1
+6,49.0,laurea,friuli venezia giulia,imprenditore,f,tecnologia,commercialista,samsung,0.0,1.0,0.0,0.0,0.1,0.0,0.0,0.1,12.0,0.9,0.8,0,0.0,0.0,0.05,0.1,0.14,0.1,1
+7,30.0,laurea,lombardia,dipendente a tempo determinato,m,istruzione e formazione,avvocato,samsung,0.0,1.0,0.0,0.2,0.5,0.03,0.6,0.5,12.0,0.2,0.2,0,0.0,0.0,0.1,0.5,0.24,0.35,0
+8,28.0,laurea,piemonte,dipendente a tempo indeterminato,f,banca assicurazione e servizi finanziari,commercialista,samsung,1.0,1.0,0.0,0.3,0.6,0.07,0.6,0.5,12.0,0.2,0.5,0,0.0,0.0,0.1,0.49,1.44,0.31,0
+9,52.0,laurea,lombardia,non occupato,f,altro,notaio,apple,0.0,0.0,0.0,0.7,0.4,0.07,0.4,0.3,12.0,0.7,0.6,0,0.0,0.0,0.0,0.3,0.49,0.25,0
+10,39.0,laurea,friuli venezia giulia,libero professionista,m,servizi medico sanitari,commercialista,samsung,1.0,1.0,0.0,0.4,0.8,0.2,0.7,0.7,12.0,0.3,0.3,0,0.0,0.0,0.2,0.58,1.92,0.38,0
+11,23.0,laurea,lombardia,non occupato,f,altro,dentista,samsung,0.0,0.0,0.0,0.2,0.3,0.0,0.2,0.2,12.0,0.2,0.2,0,0.0,0.0,0.2,0.2,0.24,0.16,0
+12,41.0,laurea,trentino alto adige,libero professionista,f,consulenza e servizi manageriali,avvocato,samsung,0.0,1.0,0.0,0.1,0.1,0.0,0.05,0.1,12.0,0.3,0.4,0,0.0,0.0,0.05,0.2,0.09,0.2,1
+13,44.0,laurea,marche,dipendente a tempo indeterminato,f,servizi di assistenza sociale,oculista,apple,1.0,1.0,0.0,0.2,0.5,0.1,0.2,0.4,12.0,0.5,0.1,0,0.0,0.0,0.1,0.35,1.57,0.26,0
+14,80.0,laurea,sicilia,pensionato,m,altro,oculista,samsung,1.0,0.0,0.0,0.4,0.2,0.03,0.2,0.2,12.0,0.8,0.1,0,0.0,0.0,0.0,0.2,0.14,0.16,0
+15,48.0,laurea,lazio,non occupato,f,altro,dentista,apple,0.0,0.0,0.0,0.5,0.6,0.2,0.6,0.6,12.0,0.5,0.1,0,0.0,0.0,0.1,0.05,0.99,0.07,0
+16,40.0,laurea,toscana,imprenditore,f,commercio al dettaglio,commercialista,apple,0.0,1.0,0.0,0.5,0.8,0.27,0.6,0.7,12.0,0.5,0.4,0,0.0,0.0,0.49,0.23,0.66,0.35,0
+17,47.0,laurea,veneto,imprenditore,m,commercio al dettaglio,avvocato,apple,0.0,1.0,0.0,0.4,0.6,0.13,0.5,0.5,12.0,0.7,0.7,0,0.0,0.0,0.35,0.13,0.06,0.22,1
+18,32.0,laurea,puglia,dipendente a tempo indeterminato,f,banca assicurazione e servizi finanziari,dentista,samsung,1.0,1.0,0.0,0.6,0.5,0.37,0.5,0.5,12.0,0.5,0.4,0,0.0,0.0,0.2,0.2,1.19,0.42,0
+19,42.0,laurea,campania,imprenditore,m,trasporti e logistica,commercialista,samsung,1.0,1.0,0.0,0.2,0.8,0.37,0.5,0.7,12.0,0.3,0.3,0,0.0,0.0,0.49,0.23,0.33,0.35,0
+20,43.0,laurea,lombardia,imprenditore,m,commercio al dettaglio,dentista,apple,0.0,1.0,0.0,0.5,0.2,0.17,0.1,0.1,12.0,0.6,0.2,0,0.0,0.0,0.6,0.2,0.14,0.12,1
+21,59.0,laurea,calabria,dipendente a tempo indeterminato,f,commercio al dettaglio,oculista,apple,1.0,1.0,0.0,0.3,0.4,0.13,0.2,0.3,12.0,0.3,0.2,0,0.0,0.0,0.1,0.27,0.23,0.31,0
+22,40.0,laurea,molise,dipendente a tempo determinato,f,istruzione e formazione,dentista,samsung,1.0,1.0,0.0,0.2,0.3,0.13,0.2,0.3,12.0,0.5,0.3,0,0.0,0.0,0.0,0.18,0.72,0.22,0
+23,29.0,laurea,piemonte,libero professionista,f,servizi medico sanitari,commercialista,samsung,0.0,1.0,0.0,0.4,0.5,0.17,0.5,0.5,12.0,0.5,0.5,0,0.0,0.0,0.1,0.5,0.79,0.39,0
+24,29.0,laurea,emilia romagna,imprenditore,m,consulenza e servizi manageriali,notaio,apple,0.0,1.0,0.0,0.2,0.6,0.1,0.7,0.7,12.0,0.2,0.2,0,0.0,0.0,0.0,0.2,0.99,0.1,0
+25,43.0,laurea,liguria,imprenditore,m,banca assicurazione e servizi finanziari,commercialista,samsung,1.0,1.0,0.0,0.7,0.7,0.2,0.5,0.7,12.0,0.6,0.6,0,0.0,0.0,0.49,0.4,0.74,0.4,0
+26,33.0,laurea,piemonte,libero professionista,f,servizi immobiliari,commercialista,apple,0.0,1.0,0.0,0.3,0.5,0.07,0.3,0.4,12.0,0.6,0.6,0,0.0,0.0,0.2,0.19,0.9875,0.19,0
+27,53.0,laurea,toscana,dipendente a tempo indeterminato,m,industria manufatturiera,oculista,samsung,1.0,1.0,0.0,0.4,0.7,0.2,0.5,0.5,12.0,0.2,0.2,0,0.0,0.0,0.3,0.3,1.385,0.3,0
+28,36.0,laurea,lazio,dipendente a tempo indeterminato,m,istruzione e formazione,dentista,samsung,1.0,1.0,0.0,0.4,0.3,0.13,0.2,0.3,12.0,0.4,0.5,0,0.0,0.0,0.0,0.2,0.91,0.26,0
+29,46.0,laurea,liguria,imprenditore,m,commercio al dettaglio,notaio,samsung,0.0,1.0,0.0,0.4,0.6,0.17,0.3,0.5,12.0,0.5,0.4,0,0.0,0.0,0.3,0.36,1.71,0.2,0
+30,38.0,laurea,campania,consulente con partita IVA,m,turismo moda sport e tempo libero,oculista,apple,0.0,0.0,0.0,0.3,0.4,0.03,0.4,0.3,12.0,0.4,0.3,0,0.0,0.0,0.0,0.1,0.0,0.09,1
+31,58.0,laurea,campania,libero professionista,m,turismo moda sport e tempo libero,oculista,samsung,0.0,1.0,0.0,0.1,0.1,0.0,0.1,0.1,12.0,0.6,0.8,0,0.0,0.0,0.0,0.1,0.02,0.09,1
+32,42.0,laurea,piemonte,libero professionista,f,altro,commercialista,samsung,0.0,1.0,0.0,0.5,0.6,0.2,0.8,0.7,12.0,0.3,0.3,0,0.0,0.0,0.1,0.2,1.99,0.16,0
+33,52.0,laurea,veneto,imprenditore,m,costruzioni,commercialista,apple,0.0,1.0,0.0,0.4,0.4,0.17,0.4,0.6,12.0,0.4,0.4,0,0.0,0.0,0.29,0.1,0.063,0.16,1
+34,58.0,laurea,emilia romagna,libero professionista,m,design architettura e arti creative,notaio,samsung,0.0,1.0,0.0,0.11,0.08,0.0,0.01,0.05,12.0,0.4,0.7,0,0.0,0.0,0.04,0.1,0.0,0.1,1
