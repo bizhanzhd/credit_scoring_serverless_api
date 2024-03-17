@@ -1,0 +1,42 @@
+Resources:
+  IamRoleLambdaExecution:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: !Join
+            - '-'
+            - - ${self:service}
+              - ${opt:stage}
+              - lambda
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'logs:CreateLogStream'
+                  - 'logs:CreateLogGroup'
+                Resource: ['arn:aws:logs:*:*:*']
+              - Effect: Allow
+                Action:
+                  - 'logs:PutLogEvents'
+                Resource: ['arn:aws:logs:*:*:*']
+              - Effect: Allow
+                Action:
+                  - 'ssm:GetParameters'
+                Resource: ['*']
+      Path: /
+      RoleName: !Join
+        - '-'
+        - - ${self:service}
+          - ${opt:stage}
+          - !Ref 'AWS::Region'
+          - lambdaRole

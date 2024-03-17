@@ -1,0 +1,12 @@
+- process:
+    name: ${self:service}-${self:provider.stage}
+    description: Handle events
+    handler: src/handlers/${self:provider.name}/handler.handler
+    timeout: 15
+    package:
+      include:
+        - src/handlers/${self:provider.name}/handler.js
+    events:
+      - cloudwatchLog:
+          logGroup: /aws/lambda/credit-recommendation-service-${opt:stage}
+          filter: 'AUDITING'

@@ -1,0 +1,32 @@
+service: credit-recommendation-auditor
+
+plugins:
+  - serverless-prune-plugin
+
+custom:
+  defaultRegion: eu-central-1
+  prune:
+    automatic: true
+    number: 2
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  architecture: arm64
+  stage: ${opt:stage}
+  region: ${opt:region, self:custom.defaultRegion}
+  stackName: sls-${self:service}-${self:provider.stage}-stack
+  environment:
+    ${file(./configs/providers/${self:provider.name}/${opt:stage}/env.yml)}
+  deploymentBucket:
+    name: credit-recommendation-deployment-bucket-${opt:stage}
+  role: !GetAtt IamRoleLambdaExecution.Arn
+  logs:
+    restApi: false
+
+functions:
+  ${file(./configs/functions/functions.yml)}
+
+resources:
+  - ${file(./configs/resources/log-group-and-subscription.yml)}
+  - ${file(./configs/resources/roles.yml)}
